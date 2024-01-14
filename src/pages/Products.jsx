@@ -11,10 +11,11 @@ import { MdWindow, MdOutlineMenu } from "react-icons/md";
 import ProductGrid from "../components/ProductGrid";
 import ProductLine from "../components/ProductLine";
 import Form from "../components/Form";
+import { reauthenticateWithCredential } from "firebase/auth";
 
 function Products() {
   const { formResults } = useSelector((store) => store.cartState);
-  const { data } = useFetch(
+  const { data, isPending } = useFetch(
     `${
       !formResults
         ? `https://strapi-store-server.onrender.com/api/products`
@@ -29,6 +30,9 @@ function Products() {
   );
 
   const [toggle, setToggle] = useState(false);
+  if (isPending) {
+    return <span className="loading loading-ball loading-sm"></span>;
+  }
   return (
     <div>
       <Form />

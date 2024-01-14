@@ -14,9 +14,16 @@ function SingleProduct() {
   const dispatch = useDispatch();
   const amount = useRef();
   const { id } = useParams();
-  const { data } = useFetch(
+  const { data, isPending } = useFetch(
     `https://strapi-store-server.onrender.com/api/products/${id}`
   );
+  if (isPending) {
+    return (
+      <div className="h-96 flex items-center justify-center">
+        <span className="loading loading-ball loading-sm"></span>
+      </div>
+    );
+  }
   return (
     <div className="my-10">
       <p className="my-2">

@@ -4,17 +4,21 @@ import { usePrice } from "../hooks/usePrice";
 import { Link } from "react-router-dom";
 
 function Featured() {
-  const { data } = useFetch(
+  const { data, isPending } = useFetch(
     "https://strapi-store-server.onrender.com/api/products?featured=true"
   );
   {
     data && console.log(data);
   }
+
   return (
     <div>
       <h2 className="text-3xl font-medium">Featured Products</h2>
       <hr />
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-10">
+        {isPending && (
+          <span className="my-10 loading loading-ball loading-sm"></span>
+        )}
         {data &&
           data.data.map((featured) => {
             return (
