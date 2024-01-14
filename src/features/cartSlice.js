@@ -12,6 +12,7 @@ const initialState = {
   localOrder: [],
   mode: false,
   qty: 0,
+  user: null,
 };
 
 export const getCartFromLocalStorage = () => {
@@ -59,6 +60,14 @@ const cartSlice = createSlice({
       item.amount = amount;
       cartSlice.caseReducers.calculateTotals(state);
       toast.success("Cart have updated");
+    },
+    login: (state, { payload }) => {
+      state.user = payload;
+      localStorage.setItem("user", JSON.stringify(state));
+    },
+    logout: (state) => {
+      state.user = null;
+      localStorage.setItem("user", JSON.stringify(initialState));
     },
     addProduct: (state, { payload }) => {
       const data = payload;
@@ -124,6 +133,8 @@ export const {
   modeChanger,
   quantityCounter,
   calculateTotals,
+  login,
+  logout,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
