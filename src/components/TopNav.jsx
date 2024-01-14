@@ -10,9 +10,9 @@ function TopNav() {
   return (
     <div className="bg-slate-950 py-2">
       <div className="container text-white text-sm flex flex-row-reverse gap-4 items-center">
-        <Link className="btn" onClick={() => dispatch(logout())}>
+        <a href="login" className="btn" onClick={() => dispatch(logout())}>
           Logout
-        </Link>
+        </a>
         <h2>Hello, {user.displayName}</h2>
       </div>
     </div>
