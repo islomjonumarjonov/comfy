@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 import { getCartFromLocalStorage } from "../features/cartSlice";
 import { generateAmountOptions, usePrice } from "../hooks/usePrice";
@@ -8,24 +8,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct } from "../features/cartSlice";
 
 import { editProduct, calculateTotals } from "../features/cartSlice";
+import { Link } from "react-router-dom";
 
 function CartList() {
-  const { cartTotal } = useSelector((store) => store.cartState);
+  const { cartTotal, shipping, tax, orderTotal } = useSelector(
+    (store) => store.cartState
+  );
   const dispatch = useDispatch();
 
   const [reload, setReload] = useState(null);
   const clcThunk = async (dispatch) => {
     useEffect(() => {
-      console.log("ds");
       dispatch(calculateTotals());
     }, [reload]);
   };
-  console.log(usePrice(cartTotal));
+
+  clcThunk(dispatch);
   const amount = useRef();
-  const { localOrder } = JSON.parse(localStorage.getItem("cart"));
-  console.log(localOrder);
+  const { localOrder, qty } = JSON.parse(localStorage.getItem("cart"));
   return (
-    <div>
+    <div className="lg:flex gap-5">
       <div>
         <p>{localOrder.length} products</p>
         <div className="flex flex-col-reverse gap-5 my-10">
@@ -35,7 +37,6 @@ function CartList() {
                 <div
                   onMouseMoveCapture={() => {
                     dispatch(calculateTotals());
-                    console.log(2);
                   }}
                   key={i.id}
                   className="flex gap-10 shadow-md rounded items-start p-5"
@@ -45,12 +46,12 @@ function CartList() {
                     alt=""
                     className="w-32 h-32 rounded object-cover"
                   />
-                  <div className="flex justify-between gap-40 w-full">
+                  <div className="flex justify-between gap-10 w-full">
                     <div className="flex flex-col gap-2">
                       <h3 className="text-lg font-medium">{i.title}</h3>
                       <p className="text-slate-400">{i.company}</p>
                     </div>
-                    <div className="flex gap-60">
+                    <div className="flex gap-40">
                       <div>
                         <span className="label-text">Amount</span>
                         <select
@@ -94,6 +95,34 @@ function CartList() {
             })}
         </div>
       </div>
+      {qty && (
+        <div className="flex flex-col gap-3 lg:my-10 w-[400px]">
+          <div className="p-5 bg-info bg-opacity-10 rounded-xl ">
+            <div className="flex justify-between">
+              <p className="text-sm">Subtotal</p>
+              <p className="text-sm">{usePrice(cartTotal)}</p>
+            </div>
+            <hr />
+            <div className="flex justify-between mt-5">
+              <p className="text-sm">Shipping</p>
+              <p className="text-sm">{usePrice(shipping)}</p>
+            </div>
+            <hr />
+            <div className="flex justify-between mt-5">
+              <p className="text-sm">Tax</p>
+              <p className="text-sm">{usePrice(tax)}</p>
+            </div>
+            <hr />
+            <div className="flex justify-between mt-5">
+              <p className="px-4 lg:px-2">Order Total</p>
+              <p className="">{usePrice(orderTotal)}</p>
+            </div>
+          </div>
+          <Link to="/checkout" className="btn btn-info">
+            Proceed to Checkout
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

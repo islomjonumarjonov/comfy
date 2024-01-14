@@ -12,7 +12,6 @@ import { modeChanger, quantityCounter } from "../features/cartSlice";
 function Nav() {
   const { localOrder, qty } = useSelector((store) => store.cartState);
   const [m, setM] = useState(null);
-  console.log(qty);
 
   const dispatch = useDispatch();
   dispatch(quantityCounter());

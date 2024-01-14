@@ -107,10 +107,9 @@ const cartSlice = createSlice({
       state.localOrder.map((i) => {
         state.cartTotal += i.price * i.amount;
       });
-      console.log(state.cartTotal);
-      // state.tax = 0.1 * state.cartTotal;
-      // state.orderTotal = state.cartTotal + state.shipping + state.tax;
-      // localStorage.setItem("cart", JSON.stringify(state));
+      state.tax = 0.1 * state.cartTotal;
+      state.orderTotal = state.cartTotal + state.shipping + state.tax;
+      localStorage.setItem("cart", JSON.stringify(state));
     },
   },
 });
