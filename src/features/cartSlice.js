@@ -12,7 +12,7 @@ const initialState = {
   localOrder: [],
   mode: false,
   qty: 0,
-  user: null,
+  user: false,
 };
 
 export const getCartFromLocalStorage = () => {
