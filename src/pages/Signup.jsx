@@ -25,7 +25,7 @@ function Signup() {
       <form
         onSubmit={handleSubmit}
         ref={form}
-        className="card gap-5 shadow-xl w-[35%] items-center mx-auto my-10 p-5"
+        className="card gap-5 shadow-xl w-[90%] md:w-[35%] items-center mx-auto my-10 p-5"
       >
         <h2 className="text-3xl font-bold">Register</h2>
         <label className="form-control w-full max-w-xs">
