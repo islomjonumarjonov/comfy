@@ -39,7 +39,7 @@ function CartList() {
                     dispatch(calculateTotals());
                   }}
                   key={i.id}
-                  className="flex gap-10 shadow-md rounded items-start p-5"
+                  className="flex gap-1 md:gap-10 shadow-md rounded items-start p-5"
                 >
                   <img
                     src={i.image}
@@ -48,10 +48,14 @@ function CartList() {
                   />
                   <div className="flex justify-between gap-10 w-full">
                     <div className="flex flex-col gap-2">
-                      <h3 className="text-lg font-medium">{i.title}</h3>
-                      <p className="text-slate-400">{i.company}</p>
+                      <h3 className="text-sm md:text-lg font-medium">
+                        {i.title}
+                      </h3>
+                      <p className="text-slate-400 text-sm md:text-lg">
+                        {i.company}
+                      </p>
                     </div>
-                    <div className="flex gap-40">
+                    <div className="flex gap-3  md:gap-40">
                       <div>
                         <span className="label-text">Amount</span>
                         <select
@@ -73,7 +77,7 @@ function CartList() {
                           defaultValue={i.amount}
                           className="select select-bordered w-full max-w-xs my-5"
                         >
-                          {generateAmountOptions(20)}
+                          {generateAmountOptions(100)}
                         </select>
                       </div>
                       <div className="flex flex-col gap-6 items-center">
