@@ -10,8 +10,24 @@ function TopNav() {
   return (
     <div className="bg-slate-950 py-2">
       <div className="container text-white text-sm flex flex-row-reverse gap-4 items-center">
-        <a href="login" className="btn" onClick={() => dispatch(logout())}>
+        <Link
+          href="login"
+          className="btn"
+          onClick={(e) => {
+            dispatch(logout());
+            reset();
+          }}
+        >
           Logout
+        </Link>
+        <a
+          onClick={() => {
+            localStorage.clear(localStorage.getItem("user"));
+          }}
+          href="/signup"
+          className="btn"
+        >
+          Signup
         </a>
         <h2>Hello, {user.displayName}</h2>
       </div>
